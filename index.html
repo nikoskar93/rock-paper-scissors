@@ -1,4 +1,4 @@
-!<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,75 +7,92 @@
     <title>Rock-Paper-Scissors</title>
 </head>
 <body>
+    <button id="rock">Rock</button>
+    <button id="paper">Paper</button>
+    <button id="scissors">Scissors</button>
+    <button id="reset">Reset game?</button>
+    <div id="results"></div>
+        <div id="computer-pick"></div>
+        <div id="player-pick"></div>
+        <div id="player-score"></div>
+        <div id="computer-score"></div>
+        <div id="final-result"></div>
+   
+    <style>
+        #results {
+            display: flex;
+            flex-direction: row;
+        }
+    </style>
     <script>
+        
         let playerSelection;
         let computerSelection;
         let playerScore=0;
         let computerScore=0;
-       
-        const choices = ['rock', 'paper', 'scissors'];
+        const results=document.querySelector('#results');
+        const compScore=document.querySelector('#computer-score');
+        const yourScore=document.querySelector('#player-score');
+        const finalResult=document.querySelector('#final-result');
         
-        function computerPlay() {
-            const randomValue = choices[Math.floor(Math.random() * choices.length)];
-            return randomValue;
-            }
+        const reset=document.querySelector('#reset');
+        reset.addEventListener('click', () =>{
+            location.reload();
+        })
+        document.getElementById('rock').onclick = pick;
+        document.getElementById('paper').onclick = pick;
+        document.getElementById('scissors').onclick = pick;
+        
+        
+        function pick() {
+            let userChoice=this.id;
+        
+            let computerChoice = Math.random();
+         if (computerChoice < 0.34) {
+             computerChoice = "rock";
+          }else if(computerChoice <= 0.67) {
+             computerChoice = "paper";
+          }else{
+             computerChoice = "scissors";
+          };
+          if(playerScore===5 || computerScore===5) {
+            return winner();
+          }
+          results.textContent=playRound(userChoice, computerChoice);  
+        }
 
         
         function playRound(playerSelection, computerSelection) {
-            computerSelection=computerPlay().toLowerCase();
-            playerSelection= prompt('rock, paper or scissors?').toLowerCase();
-            if (computerSelection == playerSelection) {
+            if (computerSelection === playerSelection) {
              return "it's a tie!";
             } 
             
             else if (
-            (computerSelection == "rock" && playerSelection == "scissors") ||
-            (computerSelection == "scissors" && playerSelection == "paper") ||
-            (computerSelection == "paper" && playerSelection == "rock"))
+            (computerSelection === "rock" && playerSelection === "scissors") ||
+            (computerSelection === "scissors" && playerSelection === "paper") ||
+            (computerSelection === "paper" && playerSelection === "rock"))
             {
-                //computerScore= ++computerScore;
                 computerScore++;
-                return `you lost! ${computerSelection} beats ${playerSelection}`;
+                compScore.textContent= `Computer: ${computerScore}`;
+                return `You lost! ${computerSelection} beats ${playerSelection}`;
             } 
             
             else {
                 playerScore++;
-                return `you won! ${playerSelection} beats ${computerSelection}`;
+                yourScore.textContent=`You: ${playerScore}`;
+                return `You won! ${playerSelection} beats ${computerSelection}`;
             }
-            
+            winner();
         }
-            
-                
-        function game() {
-            //for (let i=0; i<10; i++) 
-            while (playerScore<5 && computerScore<5) //{
-               //if (playerSelection==choices.toLowerCase()) {
-                alert(playRound(playerSelection,computerSelection));
-                alert (`your score is ${playerScore} and the computer's score is ${computerScore}`);
-            //} else {
-                //alert ('please choose rock, paper or scissors!');
-            //}
-        
-            
-              
-            alert (winner());
-                
-            //}
-            }
-        
+
+           
         function winner() {
-            if(playerScore==5) {
-                return "congrats! you win this game!";
-            }
-            if(computerScore==5) {
-                return "I'm sorry...you lost this game...";
+                if (playerScore>computerScore) 
+                {finalResult.textContent= "Congrats! You win this game! Play again?";
+            } else {
+                finalResult.textContent= "I'm sorry...you lost this game...Wanna play again?";
             }
         }
-       
-        game();
-        
-        
-        
 
     </script>
         
