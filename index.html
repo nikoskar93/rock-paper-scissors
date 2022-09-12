@@ -7,21 +7,62 @@
     <title>Rock-Paper-Scissors</title>
 </head>
 <body>
+    <img class = "img" src="rock-paper-scissors.jpg" alt="rock-paper-scissors image">
+    <div class="text">
+        <h2>Enjoy the game!</h2>
+        <h3>Please choose your weapon: rock, paper or scissors?</h3>
+        <h3>Whoever reaches 5 first is the winner!</h3>
+    </div>
+    <div class="main">
     <button id="rock">Rock</button>
     <button id="paper">Paper</button>
     <button id="scissors">Scissors</button>
     <button id="reset">Reset game?</button>
+    </div>  
     <div id="results"></div>
+        <div class="text2">
         <div id="computer-pick"></div>
         <div id="player-pick"></div>
         <div id="player-score"></div>
         <div id="computer-score"></div>
         <div id="final-result"></div>
-   
+        </div>
     <style>
+        body {
+            margin:0;
+            background-color: rgb(185, 203, 216);
+        }
+
+        img {
+            margin-left: 30px;
+        }
+        .main {
+            margin-top: 20px;
+            margin-left: 30px;
+            margin-bottom: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .text {
+            color: rgb(56, 56, 56);
+            margin-left: 30px;
+        }
+
+        .text2 {
+            margin-left: 30px;
+        }
+
+        button {
+            color:white;
+            background-color: rgb(37, 106, 185);
+            font-size: medium;
+        }
+
         #results {
             display: flex;
             flex-direction: row;
+            margin-left: 30px;
         }
     </style>
     <script>
@@ -55,7 +96,8 @@
           }else{
              computerChoice = "scissors";
           };
-          if(playerScore===5 || computerScore===5) {
+          //if(playerScore===5 || computerScore===5) {
+            if(playerScore>4 || computerScore>4) {
             return winner();
           }
           results.textContent=playRound(userChoice, computerChoice);  
@@ -82,14 +124,16 @@
                 yourScore.textContent=`You: ${playerScore}`;
                 return `You won! ${playerSelection} beats ${computerSelection}`;
             }
-            winner();
+            
         }
 
            
         function winner() {
-                if (playerScore>computerScore) 
+                if (playerScore>computerScore)
+                //if (playerScore===5) 
                 {finalResult.textContent= "Congrats! You win this game! Play again?";
             } else {
+            //if(computerScore===5) {
                 finalResult.textContent= "I'm sorry...you lost this game...Wanna play again?";
             }
         }
